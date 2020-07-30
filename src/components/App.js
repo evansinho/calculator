@@ -3,7 +3,7 @@ import Display from './Display';
 import ButtonPanel from './ButtonPanel';
 
 const App = () => (
-  <div id="parent-div">
+  <div id="calculator-container" className="app">
     <Display />
     <ButtonPanel />
   </div>
