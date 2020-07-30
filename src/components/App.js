@@ -6,8 +6,9 @@ class App extends Component {
   render() {
     return (
       <div id="calculator-container">
-        <Display />
-        <ButtonPanel />
+        <h1>hello</h1>
+        <Display/>
+        <ButtonPanel/>
       </div>
     )
   }
