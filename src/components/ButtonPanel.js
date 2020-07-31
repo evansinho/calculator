@@ -1,29 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from './Button';
 
-const ButtonPanel = () => {
-  const firstRow = ['AC', '+/-', '%', '÷'];
-  const secondRow = ['7', '8', '9', 'x'];
-  const thirdRow = ['4', '5', '6', '-'];
-  const fourthRow = ['1', '2', '3', '+'];
-  const fifthRow = ['0', '.', '='];
-  const rows = [firstRow, secondRow, thirdRow, fourthRow, fifthRow];
+const ButtonPanel = ({ clickHandler }) => {
+  const [buttons] = useState([
+    ['AC', '+/-', '%', '÷'],
+    ['7', '8', '9', 'X'],
+    ['4', '5', '6', '-'],
+    ['1', '2', '3', '+'],
+    ['0', '.', '='],
+  ]);
+
+  const [groupIndices] = useState([1, 2, 3, 4, 5]);
+
+  const [coloredCharacters] = useState(['÷', 'X', '-', '+', '=']);
+
+  const handleClick = buttonName => clickHandler(buttonName);
+
   return (
-    <div id="button-panel">
-      {rows.map(row => (
-        <div className="btn-group" key={row}>
-          {row.map(char => (
-            <Button
-              key={char}
-              name={`${char}`}
-              color={['+', '-', 'x', '÷', '='].includes(char) ? 'orange' : ''}
-              wide={char === '0'}
-            />
-          ))}
+    <div className="button-panel">
+      {buttons.map((group, outterIndex) => (
+        <div className="btn-group" key={groupIndices[outterIndex]}>
+          {group.map(character => {
+            if (coloredCharacters.includes(character)) {
+              return (
+                <Button
+                  key={character}
+                  name={character}
+                  clickHandler={handleClick}
+                />
+              );
+            }
+            if (character === '0') {
+              return (
+                <Button
+                  key={character}
+                  name={character}
+                  color
+                  wide
+                  clickHandler={handleClick}
+                />
+              );
+            }
+            return (
+              <Button
+                key={character}
+                name={character}
+                color
+                clickHandler={handleClick}
+              />
+            );
+          })}
         </div>
       ))}
     </div>
   );
+};
+
+ButtonPanel.propTypes = {
+  clickHandler: PropTypes.func.isRequired,
 };
 
 export default ButtonPanel;
